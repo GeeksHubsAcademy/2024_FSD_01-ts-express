@@ -1,0 +1,17 @@
+{
+  "name": "fsd_2024_01",
+  "version": "1.0.0",
+  "description": "api express",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "datata",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
