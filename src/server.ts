@@ -6,6 +6,8 @@ dotenv.config();
 
 const app: Application = express();
 
+app.use(express.json());
+
 const PORT = process.env.PORT || 4001;
 
 app.get('/healthy', (req, res) => {
@@ -20,8 +22,8 @@ app.get('/healthy', (req, res) => {
 // roles routes
 app.get('/roles', getRoles)
 app.post('/roles', createRole)
-app.put('/roles', updateRole)
-app.delete('/roles', deleteRole)
+app.put('/roles/:id', updateRole)
+app.delete('/roles/:id', deleteRole)
 
 
 

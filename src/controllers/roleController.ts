@@ -10,6 +10,11 @@ export const getRoles = (req: Request,res: Response) => {
 }
 
 export const createRole = (req: Request, res: Response) => {
+
+  // recuperar la info a traves del body
+  console.log(req.body);
+  
+
   res.status(201).json(
     {
       success: true,
@@ -19,6 +24,11 @@ export const createRole = (req: Request, res: Response) => {
 }
 
 export const updateRole = (req: Request, res: Response) => {
+
+  // recuperar parametros de la ruta
+  console.log(req.params.id);
+  
+
   res.status(200).json(
     {
       success: true,
@@ -28,6 +38,10 @@ export const updateRole = (req: Request, res: Response) => {
 }
 
 export const deleteRole = (req: Request, res: Response) => {
+
+  // recuperar parametros de la ruta
+  console.log(req.params.id);
+
   res.status(200).json(
     {
       success: true,
