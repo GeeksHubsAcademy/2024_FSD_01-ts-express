@@ -8,3 +8,13 @@ export const getRoles = (req: Request,res: Response) => {
     }
   )
 }
+
+export const createRole = (req: Request, res: Response) => {
+  res.status(201).json(
+    {
+      success: true,
+      message: "Role created"
+    }
+  )
+}
+

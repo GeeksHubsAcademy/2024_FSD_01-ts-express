@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import { getRoles } from "./controllers/roleController";
+import { createRole, getRoles } from "./controllers/roleController";
 
 dotenv.config();
 
@@ -19,6 +19,10 @@ app.get('/healthy', (req, res) => {
 
 // roles routes
 app.get('/roles', getRoles)
+app.post('/roles', createRole)
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
