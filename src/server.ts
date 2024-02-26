@@ -1,8 +1,7 @@
 import express, { Application } from "express";
-import dotenv from "dotenv";
+import 'dotenv/config'
 import { createRole, deleteRole, getRoles, updateRole } from "./controllers/roleController";
 
-dotenv.config();
 
 const app: Application = express();
 
