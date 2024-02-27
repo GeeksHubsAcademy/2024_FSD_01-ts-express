@@ -3,6 +3,7 @@ import 'dotenv/config';
 
 import { DataSource } from "typeorm"
 import { Roles1708945317185 } from "./migrations/1708945317185-roles"
+import { Users1708948583994 } from "./migrations/1708948583994-users";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_DATABASE || "test",
   entities: [],
-  migrations: [Roles1708945317185],
+  migrations: [Roles1708945317185, Users1708948583994],
   synchronize: false,
   logging: false,
 })
