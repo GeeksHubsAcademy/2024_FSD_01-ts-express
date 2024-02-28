@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import 'dotenv/config'
 import { createRole, deleteRole, getRoles, updateRole } from "./controllers/roleController";
 import { AppDataSource } from "./database/db";
+import { register } from "./controllers/authController";
 
 
 const app: Application = express();
@@ -24,6 +25,9 @@ app.get('/roles', getRoles)
 app.post('/roles', createRole)
 app.put('/roles/:id', updateRole)
 app.delete('/roles/:id', deleteRole)
+
+// AUTH routes
+app.post('/api/register', register)
 
 
   AppDataSource.initialize()
