@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 
 export const register = async (req: Request, res: Response) => {
@@ -40,7 +41,7 @@ export const register = async (req: Request, res: Response) => {
       email: email,
       password: passwordEncrypted,
       role: {
-        id:1
+        id: 1
       }
     }).save()
 
@@ -57,6 +58,80 @@ export const register = async (req: Request, res: Response) => {
       success: false,
       message: "user cant be registered",
       error: error
+    })
+  }
+}
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "email or password not valid",
+      })
+    }
+
+    const user = await User.findOne(
+      {
+        where: {
+          email: email
+        },
+        relations: {
+          role: true
+        },
+        select: {
+          id: true,
+          email: true,
+          isActive: true,
+          password: true,
+          role: {
+            id: true
+          }
+        }
+      }
+    );
+
+    console.log(user);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "email or password not valid",
+      })
+    }
+
+    const isValidPassword = bcrypt.compareSync(password, user.password)
+
+    if (!isValidPassword) {
+      return res.status(200).json({
+        success: false,
+        message: "email or password not valid",
+      })
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        roleId: user.role.id
+      },
+      "secreto",
+      {
+        expiresIn: "2h"
+      }
+    )
+
+    res.status(200).json({
+      success: true,
+      message: "user loged",
+      user: user,
+      token: token
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "user cant be logged",
     })
   }
 }
