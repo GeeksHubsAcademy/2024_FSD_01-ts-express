@@ -5,6 +5,7 @@ import { AppDataSource } from "./database/db";
 import { login, register } from "./controllers/authController";
 import { deleteUserById, getUserById, getUsers, updateUserById } from "./controllers/userController";
 import { auth } from "./middlewares/auth";
+import { isSuperAdmin } from "./middlewares/isSuperAdmin";
 
 
 const app: Application = express();
@@ -34,7 +35,7 @@ app.post('/api/login', login)
 
 
 // users routes 
-app.get('/api/users', auth, getUsers)
+app.get('/api/users', auth, isSuperAdmin, getUsers)
 app.get('/api/users/:id', getUserById)
 app.put('/api/users/:id', updateUserById)
 app.delete('/api/users/:id', deleteUserById)

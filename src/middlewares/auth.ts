@@ -33,7 +33,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json(
       {
         success: false,
-        message: "JWT NOT VALID OR MALFORMED"
+        message: "JWT NOT VALID OR MALFORMED",
+        error: error
       }
     )
   }
