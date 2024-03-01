@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/server.ts",
     "run-migrations": "typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts",
-    "revert-migrations": "typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts"
+    "revert-migrations": "typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts",
+    "seed": "ts-node ./src/database/seeders/seeder.ts"
   },
   "author": "datata",
   "license": "ISC",
