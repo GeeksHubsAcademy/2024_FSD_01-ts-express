@@ -1,10 +1,56 @@
 import { Request, Response } from "express"
 import { User } from "../models/User"
+import { FindOperator, Like } from "typeorm"
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
+    interface queryFilters {
+      email?: FindOperator<string>,
+      name?: FindOperator<string>
+    }
+
+    const queryFilters: queryFilters = {} 
+
+    if(req.query.email) {
+      queryFilters.email = Like("%"+req.query.email.toString()+"%");
+    }
+
+    if(req.query.name) {
+      queryFilters.name = Like("%"+req.query.name.toString()+"%");
+    }
+
+    //recuperar las querys
+
+    // const email = req.query.email;
+    // const name = req.query.name;
+
+    // interface queryFiltersI {
+    //   email?: string
+    //   name?: string 
+    // }
+
+    // let queryFilters: queryFiltersI = {}
+
+    // if(email) {
+    //   queryFilters.email = email as string
+    // }
+    
+    // if(name) {
+    //   queryFilters.name = name as string
+    // }
+    
+    console.log(queryFilters);
+    
+
     const users = await User.find(
       {
+        // where: {
+        //   email: email
+        // },
+        // where: {
+        //   email: Like(req.query.email)
+        // }
+        where: queryFilters,
         select: {
           id: true,
           name: true,
@@ -132,6 +178,51 @@ export const deleteUserById = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "user cant be deleted",
+      error: error
+    })
+  }
+}
+
+export const updateProfile = async (req: Request, res: Response) => {
+  try {
+    // recuperar la data
+    const name = req.body.name
+    const userId = req.tokenData.userId
+
+    // validar la data
+    if(!name) {
+      return res.status(400).json(
+        {
+          success: false,
+          message: "name is needed"
+        }
+      )
+    }
+
+    // tratar la data
+
+    // actualizar en bd
+    const userUpadated = User.update(
+      {
+        id: userId
+      },
+      {
+        name: name
+      }
+    )
+
+    // responder
+    res.status(200).json(
+      {
+        success: true,
+        message: "user updated",
+        data: userUpadated
+      }
+    )
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "user profile cant be updated",
       error: error
     })
   }
