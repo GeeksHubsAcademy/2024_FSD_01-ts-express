@@ -8,7 +8,9 @@
     "dev": "nodemon ./src/server.ts",
     "run-migrations": "typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts",
     "revert-migrations": "typeorm-ts-node-commonjs migration:revert -d ./src/database/db.ts",
-    "seed": "ts-node ./src/database/seeders/seeder.ts"
+    "seed": "ts-node ./src/database/seeders/seeder.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
   },
   "author": "datata",
   "license": "ISC",
